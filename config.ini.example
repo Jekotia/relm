@@ -1,0 +1,18 @@
+[STORAGE]
+type = file
+path = ./releases
+
+[GITHUB]
+token = 
+
+[NOTIFICATIONS]
+type = email
+email_host = smtp.domain.com
+email_to = example@domain.com
+email_from = example@domain.com
+email_password = BadPassword
+
+[LOGGING]
+path = ./logs
+log_events = True
+
