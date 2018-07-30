@@ -547,7 +547,7 @@ You can find more information <a href="$url">here</a>.'''
         return self.action
 
 
-parser = ArgumentParser(prog='release-monitor.py')
+parser = ArgumentParser(prog='relm.py')
 parser.add_argument('source', choices=['all','github','mozilla'], default=False, help='The source to use')
 
 parserGroup = parser.add_mutually_exclusive_group()
