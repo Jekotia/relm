@@ -76,7 +76,10 @@ class relmon():
             with open("config.ini", "w") as configfile:
                 self.config.write(configfile)
 
-        self.GitHub_Auth_Header = { 'Authorization': 'token ' + self.config['GITHUB']['token'] }
+        if self.config['GITHUB']['token'] == '':
+            self.GitHub_Auth_Header = { }
+        else:
+            self.GitHub_Auth_Header = { 'Authorization': 'token ' + self.config['GITHUB']['token'] }
 
         sources = ['mozilla','github','github-user']
         for target in sources:
