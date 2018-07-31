@@ -1,2 +1,5 @@
-config.ini
+.vscode/
+logs/
+ref/
 releases/
+config.ini

@@ -6,11 +6,15 @@ This was developed under Python 3.7, but should work on 3.4 and newer.
 
 # How it Works
 
-The application works by hitting the API for a supported source and comparing the latest release information to what has been stored. If the API contains a newer release, a notification is created and storage is updated.
+The application works by checking the API for a supported source and comparing the latest release information to what has been stored. If the API contains a newer release, a notification is created and storage is updated.
 
-In practical usage, storage and notifications are handled separately, with the exception of `github --user`. The `--add` and `--remove` arguments are used in conjunction with most sources in order to manage which pieces of software are in storage. Executing the program with only a source argument will check for updates for software in storage.
+In practical usage, storage and notifications are handled separately, with the exception of `github --user`. The `--add` and `--remove` arguments are used in conjunction with most sources in order to manage which pieces of software are in storage. Executing the program with only a source argument, such as `relm.py github`, will check for updates for software in storage.
 
-`github --user` behaves differently since the data-set is remotely managed. When run, it compares storage to what the GitHub API says the user has starred. Any repos found in storage but not in the API response are removed from storage. Any repos found in the API response but missing from storage are added to storage. It then iterates over the contents of storage and makes a request for each 
+`github --user` behaves differently since the data-set is remotely managed. When run, it compares storage to what the GitHub API says the user has starred. Any repos found in storage but not in the API response are removed from storage. Any repos found in the API response but missing from storage are added to storage. It then iterates over the contents of storage and makes a request for each repo.
+
+##### A note about GitHub support
+
+I only support monitoring for repos that follow proper Releases/Tags conventions. Relm will first check for entries under Releases, and if there are none it will fall back to Tags. If there are no entries under Releases or Tags, then there is nothing to be tracked. If you wish to follow a repo where the owner commits new versions without creating Releases or Tags, you should open a dialogue with them about their process and encourage them to use Releases.
 
 ## Supporting files
 
