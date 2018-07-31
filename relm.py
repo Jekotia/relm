@@ -11,6 +11,10 @@ from string import Template
 from subprocess import call
 import sys
 
+pwd = sys.path[0]
+os.chdir(pwd)
+print('Setting working directory to ' + pwd)
+
 def oops():
     print('    ┬─┬ ┌(°-°┌) ┬─┬')
     print()
