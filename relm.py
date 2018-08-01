@@ -501,9 +501,9 @@ You can find more information <a href="$url">here</a>.'''
         if self.config['STORAGE']['type'] == 'file':
             if (source == 'github') and (not user == False):
                 path = os.path.join(self.config['STORAGE']['path'], 'github-user', user, developer)
-            elif (self.source == 'github'):
+            elif (source == 'github'):
                 path = os.path.join(self.config['STORAGE']['path'], source, developer)
-            elif (self.source == 'mozilla'):
+            elif (source == 'mozilla'):
                 path = os.path.join(self.config['STORAGE']['path'], source)
 
 
