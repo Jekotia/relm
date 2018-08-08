@@ -2,7 +2,7 @@
 
 The creation of this application was inspired by the loss of sibbell.com
 
-This was developed under Python 3.7, but should work on 3.4 and newer.
+This was developed under Python 3.7.
 
 # How it Works
 
