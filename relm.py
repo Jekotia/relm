@@ -68,6 +68,8 @@ class relmon():
             self.config["GITHUB"] = { "token": "" }
             self.config["NOTIFICATIONS"] = {    "type": "email",
                                                 "email_host": "smtp.domain.com",
+                                                "email_port": "25",
+                                                "email_secure": False,
                                                 "email_to": "example@domain.com",
                                                 "email_from": "example@domain.com",
                                                 "email_password": "BadPassword"}
@@ -337,11 +339,35 @@ You can find more information <a href="$url">here</a>.'''
 
             msg = template
 
-            server = smtplib.SMTP(self.config['NOTIFICATIONS']['email_host'])
-            server.set_debuglevel(1)
             try:
-                server.login(self.config['NOTIFICATIONS']['email_from'], self.config['NOTIFICATIONS']['email_password'])
-                server.sendmail(fromaddr, toaddrs, msg)
+                email_host = self.config['NOTIFICATIONS']['email_host']
+                email_port = self.config['NOTIFICATIONS']['email_port']
+                email_user = self.config['NOTIFICATIONS']['email_from']
+                email_pass = self.config['NOTIFICATIONS']['email_password']
+                email_secure = self.config['NOTIFICATIONS'].getboolean('email_secure')
+
+                if email_secure == True:
+                    self.debug("Using secure SMTP connection")
+                    server_ssl = smtplib.SMTP_SSL(email_host, email_port)
+                    if verbose == True:
+                        server_ssl.set_debuglevel(1)
+
+                    server_ssl.ehlo()
+                    #server_ssl.starttls()
+                    server_ssl.login(email_user, email_pass)
+                    server_ssl.sendmail(fromaddr, toaddrs, msg)
+                    server_ssl.close()
+
+                else:
+                    self.debug("Using insecure SMTP connection")
+                    server = smtplib.SMTP(email_host, email_port)
+                    if verbose == True:
+                        server.set_debuglevel(1)
+
+                    server.ehlo()
+                    server.login(email_user, email_pass)
+                    server.sendmail(fromaddr, toaddrs, msg)
+                    server.close()
             except smtplib.SMTPAuthenticationError:
                 pass
                 self.log("error", "Failed to send email notification for " + jsonNew['developer'] + " " + jsonNew['software'])
@@ -349,7 +375,6 @@ You can find more information <a href="$url">here</a>.'''
             else:
                 self.log("event", "Successfully sent email notification for " + jsonNew['developer'] + " " + jsonNew['software'])
                 status = True
-            server.quit()
             return status
 
     def query(self, source, developer, software, user=False):
@@ -567,6 +592,8 @@ parser.add_argument('--debug','-d', dest='verbose', action='store_true', default
 args = parser.parse_args()
 
 runtime = relmon(args)
+
+verbose = args.verbose
 
 if not runtime.validateArgs() == False:
     if (runtime.action == 'check') or (runtime.action == 'check-all'):

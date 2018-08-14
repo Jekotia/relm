@@ -7,6 +7,8 @@ token =
 
 [NOTIFICATIONS]
 type = email
+email_port = 25
+email_secure = False
 email_host = smtp.domain.com
 email_to = example@domain.com
 email_from = example@domain.com
