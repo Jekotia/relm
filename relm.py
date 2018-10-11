@@ -270,6 +270,10 @@ You can find more information <a href="$url">here</a>.'''
         while y < len(aVer):
             #self.debug("aVer[" + str(y) + "]: " + aVer[y])
             #self.debug("sVer[" + str(y) + "]: " + sVer[y])
+            if aVer[y] == "":
+                aVer[y] = "0"
+            if sVer[y] == "":
+                sVer[y] = "0"
             if int(aVer[y]) > int(sVer[y]):
                 self.debug("NEW RELEASE")
                 updated = True
