@@ -252,7 +252,15 @@ You can find more information <a href="$url">here</a>.'''
 
         ## Check if the software in question is in storage
         if not storageResult == False:
-            latest = self.compare(storageResult['version'], apiResult['version'], apiResult)
+            #-# 
+            #-# Replace the below "try & except" with something less hacky
+            #-#
+            try:
+                latest = self.compare(storageResult['version'], apiResult['version'], apiResult)
+            except IndexError:
+                latest = self.compare(storageResult['version'], storageResult['version'], apiResult)
+                #latest['status'] = 'not-updated'
+
             if latest['status'] == "updated":
                 if self.notify(latest, storageResult):
                     self.storageWrite(source, developer, software, latest, user)
